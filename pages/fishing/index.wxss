@@ -1,0 +1,180 @@
+/* pages/fishing/index.wxss */
+.container {
+  padding: 24rpx 24rpx 60rpx;
+}
+.page-title {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #f4f9ff;
+  text-shadow: 0 0 18rpx rgba(79, 195, 247, 0.35);
+}
+.page-sub {
+  margin-top: 6rpx;
+  font-size: 22rpx;
+  color: #8fb0d0;
+  margin-bottom: 24rpx;
+}
+
+.card {
+  padding: 28rpx;
+  border-radius: 24rpx;
+  background: linear-gradient(135deg, rgba(33, 88, 130, 0.5), rgba(13, 43, 77, 0.3));
+  box-shadow: inset 0 0 0 1rpx rgba(255, 255, 255, 0.08), 0 6rpx 20rpx rgba(0, 0, 0, 0.22);
+  margin-bottom: 16rpx;
+}
+.card-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #eaf6ff;
+  margin-bottom: 14rpx;
+}
+.para {
+  font-size: 24rpx;
+  line-height: 1.7;
+  color: #c8dcec;
+  text-align: justify;
+  margin-bottom: 10rpx;
+}
+.hl {
+  color: #4fc3f7;
+  font-weight: 600;
+}
+
+/* 时段口表 */
+.stages {
+  display: flex;
+  flex-direction: column;
+}
+.stage {
+  padding: 16rpx 0;
+  border-top: 1rpx solid rgba(143, 176, 208, 0.15);
+}
+.stage:first-child {
+  border-top: 0;
+}
+.stage-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.stage-name {
+  font-size: 24rpx;
+  color: #eaf6ff;
+  font-weight: 500;
+}
+.stage-tag {
+  font-size: 20rpx;
+  padding: 3rpx 14rpx;
+  border-radius: 999rpx;
+}
+.stage-l5 .stage-tag { background: rgba(255, 82, 82, 0.18); color: #ffadad; border: 1rpx solid rgba(255, 82, 82, 0.5); }
+.stage-l3 .stage-tag { background: rgba(79, 195, 247, 0.18); color: #b6e3ff; border: 1rpx solid rgba(79, 195, 247, 0.5); }
+.stage-l2 .stage-tag { background: rgba(255, 214, 10, 0.16); color: #ffe58a; border: 1rpx solid rgba(255, 214, 10, 0.45); }
+.stage-l1 .stage-tag { background: rgba(143, 176, 208, 0.14); color: #8fb0d0; border: 1rpx solid rgba(143, 176, 208, 0.4); }
+.bars {
+  display: flex;
+  margin: 10rpx 0;
+}
+.bar {
+  flex: 1;
+  height: 12rpx;
+  margin-right: 6rpx;
+  border-radius: 4rpx;
+  background: rgba(143, 176, 208, 0.18);
+}
+.bar:last-child {
+  margin-right: 0;
+}
+.stage-l5 .bar.on { background: #ff5252; box-shadow: 0 0 6rpx rgba(255, 82, 82, 0.6); }
+.stage-l3 .bar.on { background: #4fc3f7; box-shadow: 0 0 6rpx rgba(79, 195, 247, 0.5); }
+.stage-l2 .bar.on { background: #ffd60a; }
+.stage-l1 .bar.on { background: #8fb0d0; }
+.stage-desc {
+  font-size: 22rpx;
+  color: #8fb0d0;
+  line-height: 1.6;
+}
+
+/* 鱼种卡 */
+.fish-card {
+  padding: 24rpx 28rpx;
+  border-radius: 24rpx;
+  background: linear-gradient(135deg, rgba(33, 88, 130, 0.42), rgba(13, 43, 77, 0.24));
+  box-shadow: inset 0 0 0 1rpx rgba(255, 255, 255, 0.07);
+  margin-bottom: 16rpx;
+}
+.fish-head {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 14rpx;
+}
+.fish-name {
+  font-size: 38rpx;
+  font-weight: 700;
+  color: #ffce6b;
+  margin-right: 14rpx;
+}
+.fish-tag {
+  font-size: 20rpx;
+  padding: 3rpx 14rpx;
+  border-radius: 8rpx;
+  background: rgba(255, 206, 107, 0.16);
+  color: #ffe3a8;
+  border: 1rpx solid rgba(255, 206, 107, 0.45);
+  margin-right: auto;
+}
+.fish-season {
+  font-size: 20rpx;
+  color: #6f93b3;
+}
+.fish-tide {
+  font-size: 24rpx;
+  line-height: 1.7;
+  color: #c8dcec;
+  text-align: justify;
+  margin-bottom: 12rpx;
+}
+.fish-best {
+  font-size: 22rpx;
+  color: #b9d4ec;
+  margin-bottom: 14rpx;
+  padding: 10rpx 16rpx;
+  background: rgba(79, 195, 247, 0.08);
+  border-radius: 10rpx;
+  border-left: 4rpx solid #4fc3f7;
+}
+.fb-label {
+  color: #4fc3f7;
+  margin-right: 10rpx;
+  font-weight: 600;
+}
+.factors {
+  display: flex;
+  flex-wrap: wrap;
+}
+.factor {
+  width: 100%;
+  display: flex;
+  padding: 8rpx 0;
+}
+.fk {
+  width: 90rpx;
+  flex: 0 0 90rpx;
+  font-size: 22rpx;
+  color: #6f93b3;
+}
+.fv {
+  flex: 1;
+  font-size: 22rpx;
+  color: #c8dcec;
+}
+
+.note {
+  padding: 18rpx 20rpx;
+  border-radius: 16rpx;
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 20rpx;
+  line-height: 1.6;
+  color: #6f93b3;
+  text-align: justify;
+}

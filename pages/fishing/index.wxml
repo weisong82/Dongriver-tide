@@ -1,0 +1,51 @@
+<view class="container">
+  <view class="page-title">东江钓鱼</view>
+  <view class="page-sub">潮汐与鱼口的关系</view>
+
+  <!-- 为什么钓涨潮 -->
+  <view class="card">
+    <view class="card-title">为什么钓涨潮</view>
+    <view class="para">涨潮时潮水自珠江口上溯东江，带来<text class="hl">溶氧</text>与<text class="hl">食物</text>（浮游生物、小鱼虾、藻类碎屑），鱼随潮涌入近岸浅滩觅食；同时水位升高淹没岸边草丛、浅滩，鱼到近岸就饵，<text class="hl">口最旺</text>。退潮水位降、食物沉淀、鱼归深水，近岸口减。</view>
+    <view class="para">最佳口出现在<text class="hl">涨潮初期到高潮前 2 小时</text>；若叠加日出/日落、适温水温，更佳。落潮初期有第二个小口（鱼聚于沟汊、回流区）。</view>
+  </view>
+
+  <!-- 潮汐时段口表 -->
+  <view class="card">
+    <view class="card-title">潮汐时段鱼口</view>
+    <view class="stages">
+      <view wx:for="{{stages}}" wx:key="name" class="stage stage-l{{item.level}}">
+        <view class="stage-head">
+          <text class="stage-name">{{item.name}}</text>
+          <text class="stage-tag">{{item.tag}}</text>
+        </view>
+        <view class="bars">
+          <view wx:for="{{[1,2,3,4,5]}}" wx:key="*this" wx:for-item="b" class="bar {{b <= item.level ? 'on' : ''}}"></view>
+        </view>
+        <view class="stage-desc">{{item.desc}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 鱼种 -->
+  <view class="card">
+    <view class="card-title">东江常见鱼种 · 潮汐与其他因素</view>
+  </view>
+
+  <view wx:for="{{fishes}}" wx:key="name" class="fish-card">
+    <view class="fish-head">
+      <text class="fish-name">{{item.name}}</text>
+      <text class="fish-tag">{{item.tag}}</text>
+      <text class="fish-season">季 {{item.season}}</text>
+    </view>
+    <view class="fish-tide">{{item.tide}}</view>
+    <view class="fish-best"><text class="fb-label">最佳口</text>{{item.best}}</view>
+    <view class="factors">
+      <view wx:for="{{item.factors}}" wx:key="k" wx:for-item="f" class="factor">
+        <text class="fk">{{f.k}}</text>
+        <text class="fv">{{f.v}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="note">提示：东江感潮段从虎门上溯至惠州博罗一带，潮汐影响显著；越往上游径流主导、潮汐减弱。钓鱼请遵守当地禁渔期、禁渔区规定，留意台风/泄洪期水位暴涨，安全第一。</view>
+</view>

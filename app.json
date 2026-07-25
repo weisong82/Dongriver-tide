@@ -1,7 +1,8 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/surge/index"
+    "pages/surge/index",
+    "pages/fishing/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -17,7 +18,8 @@
     "borderStyle": "black",
     "list": [
       { "pagePath": "pages/index/index", "text": "潮汐表" },
-      { "pagePath": "pages/surge/index", "text": "气象增减水" }
+      { "pagePath": "pages/surge/index", "text": "气象增减水" },
+      { "pagePath": "pages/fishing/index", "text": "东江钓鱼" }
     ]
   },
   "style": "v2",
