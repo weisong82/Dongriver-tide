@@ -1,0 +1,25 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/surge/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#0b1f3a",
+    "navigationBarTitleText": "东江潮汐",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#0b1f3a"
+  },
+  "tabBar": {
+    "color": "#8fb0d0",
+    "selectedColor": "#4fc3f7",
+    "backgroundColor": "#0b1f3a",
+    "borderStyle": "black",
+    "list": [
+      { "pagePath": "pages/index/index", "text": "潮汐表" },
+      { "pagePath": "pages/surge/index", "text": "气象增减水" }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

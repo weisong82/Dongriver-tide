@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "tide-chart": "../../components/tide-chart/tide-chart"
+  },
+  "navigationStyle": "default"
+}

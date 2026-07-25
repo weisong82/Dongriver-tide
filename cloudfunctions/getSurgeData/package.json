@@ -1,0 +1,9 @@
+{
+  "name": "getSurgeData",
+  "version": "1.0.0",
+  "description": "抓取博罗(二)站水位与台风风暴增水",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^1.7.0"
+  }
+}

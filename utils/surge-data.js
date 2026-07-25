@@ -1,0 +1,59 @@
+// utils/surge-data.js
+// 气象增减水数据获取层 —— 通过云函数 getSurgeData 抓取
+// 云函数未部署/调用失败时降级为最近一次真实抓取示例（UI 标注"示例"）。
+// 云函数实现见 cloudfunctions/getSurgeData/index.js
+
+// 降级示例数据（2026-07-25 调研真实抓取所得）
+const SAMPLE_BOLUO = {
+  level: '1.03',
+  unit: 'm',
+  time: '2026-07-23 08:00',
+  warn: '—（未设置）',
+  status: 'sample',
+  source: '水位大师 shuiwei.cc（最近一次抓取示例）'
+};
+
+const SAMPLE_TYPHOON = {
+  name: '红霞',
+  number: '202612',
+  level: '台风级',
+  surge: '受台风“红霞”影响，广东揭阳到惠州沿海将出现 80 到 160 厘米的风暴增水，深圳沿海 30 到 80 厘米。',
+  status: 'sample',
+  source: '国家海洋环境预报中心 2026-07-25'
+};
+
+function normalizeBoluo(b) {
+  if (!b || b.status !== 'live' || !b.level) {
+    return Object.assign({}, SAMPLE_BOLUO, { status: 'sample' });
+  }
+  return Object.assign({}, SAMPLE_BOLUO, b, { status: 'live' });
+}
+
+function normalizeTyphoon(t) {
+  if (!t || t.status !== 'live') {
+    return Object.assign({}, SAMPLE_TYPHOON, { status: 'sample' });
+  }
+  // 云函数 live 时只返回 name/surge/status/source，其余字段不补假值
+  return Object.assign({}, SAMPLE_TYPHOON, t, { status: 'live' });
+}
+
+function fetchSurgeData() {
+  return new Promise((resolve) => {
+    if (!wx.cloud || !wx.cloud.callFunction) {
+      resolve({ boluo: normalizeBoluo(null), typhoon: normalizeTyphoon(null) });
+      return;
+    }
+    wx.cloud.callFunction({
+      name: 'getSurgeData',
+      success(res) {
+        const r = (res && res.result) || {};
+        resolve({ boluo: normalizeBoluo(r.boluo), typhoon: normalizeTyphoon(r.typhoon) });
+      },
+      fail() {
+        resolve({ boluo: normalizeBoluo(null), typhoon: normalizeTyphoon(null) });
+      }
+    });
+  });
+}
+
+module.exports = { fetchSurgeData, SAMPLE_BOLUO, SAMPLE_TYPHOON };

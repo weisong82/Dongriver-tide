@@ -1,0 +1,312 @@
+/* pages/index/index.wxss */
+.container {
+  padding: 24rpx 24rpx 48rpx;
+}
+
+/* 顶部标题 */
+.header {
+  margin-bottom: 24rpx;
+}
+.title-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+.title {
+  font-size: 44rpx;
+  font-weight: 700;
+  letter-spacing: 2rpx;
+  color: #f4f9ff;
+  text-shadow: 0 0 18rpx rgba(79, 195, 247, 0.35);
+}
+.subtitle {
+  display: block;
+  margin-top: 8rpx;
+  font-size: 22rpx;
+  color: #8fb0d0;
+}
+
+/* 当前潮位卡片 */
+.now-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28rpx 32rpx;
+  border-radius: 24rpx;
+  background: linear-gradient(135deg, rgba(33, 88, 130, 0.55), rgba(13, 43, 77, 0.35));
+  box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.25), inset 0 0 0 1rpx rgba(255, 255, 255, 0.08);
+}
+.now-left {
+  display: flex;
+  flex-direction: column;
+}
+.now-label {
+  font-size: 22rpx;
+  color: #8fb0d0;
+}
+.now-value {
+  display: flex;
+  align-items: baseline;
+  margin-top: 4rpx;
+}
+.now-num {
+  font-size: 64rpx;
+  font-weight: 700;
+  color: #eaf6ff;
+  line-height: 1;
+}
+.now-unit {
+  font-size: 24rpx;
+  color: #8fb0d0;
+  margin-left: 8rpx;
+}
+.now-state {
+  display: flex;
+  align-items: center;
+  margin-top: 10rpx;
+  font-size: 22rpx;
+  color: #8fb0d0;
+}
+.now-state.rising .state-dot {
+  background: #ff5252;
+  box-shadow: 0 0 10rpx #ff5252;
+}
+.now-state.falling .state-dot {
+  background: #4fc3f7;
+  box-shadow: 0 0 10rpx #4fc3f7;
+}
+.state-dot {
+  width: 12rpx;
+  height: 12rpx;
+  border-radius: 50%;
+  margin-right: 8rpx;
+  display: inline-block;
+}
+
+.now-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.station-tabs {
+  display: flex;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 999rpx;
+  padding: 4rpx;
+}
+.tab {
+  padding: 10rpx 32rpx;
+  border-radius: 999rpx;
+  font-size: 26rpx;
+  color: #8fb0d0;
+}
+.tab.active {
+  background: linear-gradient(135deg, #4fc3f7, #2196f3);
+  color: #fff;
+  box-shadow: 0 4rpx 14rpx rgba(33, 150, 243, 0.45);
+}
+.station-desc {
+  margin-top: 10rpx;
+  font-size: 20rpx;
+  color: #6f93b3;
+}
+
+/* 日期条 */
+.date-bar {
+  margin: 0 -24rpx 24rpx;
+  white-space: nowrap;
+}
+.date-list {
+  display: inline-flex;
+  padding: 0 24rpx;
+}
+.date-item {
+  flex: 0 0 auto;
+  width: 104rpx;
+  height: 110rpx;
+  margin-right: 16rpx;
+  border-radius: 20rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 0 0 1rpx rgba(255, 255, 255, 0.06);
+  transition: all 0.2s;
+}
+.date-item.on {
+  background: linear-gradient(135deg, rgba(79, 195, 247, 0.25), rgba(33, 150, 243, 0.18));
+  box-shadow: inset 0 0 0 2rpx rgba(79, 195, 247, 0.8), 0 6rpx 18rpx rgba(33, 150, 243, 0.25);
+}
+.weekday {
+  font-size: 22rpx;
+  color: #8fb0d0;
+}
+.date-item.on .weekday {
+  color: #eaf6ff;
+}
+.date-item.is-today .weekday {
+  color: #ffd60a;
+}
+.date-num {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #d8e8f6;
+  margin-top: 4rpx;
+}
+.date-item.on .date-num {
+  color: #fff;
+}
+
+/* 日期条潮汐强度圆点 */
+.date-tide {
+  width: 10rpx;
+  height: 10rpx;
+  border-radius: 50%;
+  margin-top: 6rpx;
+  background: rgba(143, 176, 208, 0.3);
+}
+.date-tide.tide-big { background: #ff9a3c; box-shadow: 0 0 6rpx rgba(255, 154, 60, 0.6); }
+.date-tide.tide-mid { background: #4fc3f7; box-shadow: 0 0 6rpx rgba(79, 195, 247, 0.5); }
+.date-tide.tide-small { background: #6f93b3; }
+
+/* 潮汐状态徽章 */
+.chart-title-row {
+  display: flex;
+  align-items: center;
+}
+.tide-badge {
+  font-size: 22rpx;
+  padding: 4rpx 16rpx;
+  border-radius: 999rpx;
+  font-weight: 600;
+  margin-left: 14rpx;
+}
+.tide-badge.tide-big { color: #ff9a3c; background: rgba(255, 154, 60, 0.16); border: 1rpx solid rgba(255, 154, 60, 0.55); }
+.tide-badge.tide-mid { color: #4fc3f7; background: rgba(79, 195, 247, 0.16); border: 1rpx solid rgba(79, 195, 247, 0.55); }
+.tide-badge.tide-small { color: #8fb0d0; background: rgba(143, 176, 208, 0.12); border: 1rpx solid rgba(143, 176, 208, 0.45); }
+
+/* 潮汐图卡片 */
+.chart-card {
+  padding: 24rpx;
+  border-radius: 24rpx;
+  background: linear-gradient(180deg, rgba(33, 88, 130, 0.35), rgba(13, 43, 77, 0.2));
+  box-shadow: inset 0 0 0 1rpx rgba(255, 255, 255, 0.06);
+  margin-bottom: 24rpx;
+}
+.chart-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 8rpx;
+}
+.chart-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #eaf6ff;
+}
+.chart-range {
+  font-size: 20rpx;
+  color: #8fb0d0;
+}
+.chart-legend {
+  display: flex;
+  align-items: center;
+  margin-top: 10rpx;
+}
+.lg {
+  display: flex;
+  align-items: center;
+  font-size: 20rpx;
+  color: #8fb0d0;
+  margin-right: 28rpx;
+}
+.lg .dot {
+  width: 14rpx;
+  height: 14rpx;
+  border-radius: 50%;
+  margin-right: 8rpx;
+}
+.lg-high .dot {
+  background: #ff5252;
+}
+.lg-low .dot {
+  background: #4fc3f7;
+}
+.lg-now .bar {
+  width: 4rpx;
+  height: 16rpx;
+  background: #ffd60a;
+  margin-right: 8rpx;
+  display: inline-block;
+}
+
+/* 时刻表 */
+.extrema-card {
+  padding: 24rpx;
+  border-radius: 24rpx;
+  background: linear-gradient(180deg, rgba(33, 88, 130, 0.35), rgba(13, 43, 77, 0.2));
+  box-shadow: inset 0 0 0 1rpx rgba(255, 255, 255, 0.06);
+  margin-bottom: 24rpx;
+}
+.extrema-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #eaf6ff;
+  margin-bottom: 16rpx;
+}
+.extrema-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+.extrema-item {
+  width: 50%;
+  box-sizing: border-box;
+  padding: 16rpx 20rpx;
+  display: flex;
+  align-items: center;
+  border-radius: 14rpx;
+  position: relative;
+}
+.extrema-item::before {
+  content: '';
+  width: 6rpx;
+  height: 36rpx;
+  border-radius: 4rpx;
+  margin-right: 16rpx;
+}
+.extrema-item.high::before {
+  background: #ff5252;
+  box-shadow: 0 0 8rpx rgba(255, 82, 82, 0.5);
+}
+.extrema-item.low::before {
+  background: #4fc3f7;
+  box-shadow: 0 0 8rpx rgba(79, 195, 247, 0.5);
+}
+.ex-time {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #eaf6ff;
+  font-variant-numeric: tabular-nums;
+}
+.ex-type {
+  font-size: 20rpx;
+  color: #8fb0d0;
+  margin-left: 12rpx;
+}
+.ex-height {
+  margin-left: auto;
+  font-size: 24rpx;
+  color: #b9d4ec;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 说明 */
+.note {
+  padding: 20rpx 8rpx;
+  font-size: 20rpx;
+  line-height: 1.6;
+  color: #6f93b3;
+  text-align: justify;
+}

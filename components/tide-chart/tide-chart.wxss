@@ -1,0 +1,10 @@
+.chart-wrap {
+  width: 100%;
+  height: 380rpx;
+  position: relative;
+}
+.canvas {
+  width: 100%;
+  height: 380rpx;
+  display: block;
+}

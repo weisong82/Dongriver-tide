@@ -1,0 +1,79 @@
+<view class="container">
+  <!-- 顶部 -->
+  <view class="header">
+    <view class="title-row">
+      <view>
+        <text class="title">东江潮汐表</text>
+        <text class="subtitle">惠州 · 东莞 东江感潮段</text>
+      </view>
+    </view>
+
+    <view class="now-card">
+      <view class="now-left">
+        <text class="now-label">当前潮位</text>
+        <view class="now-value">
+          <text class="now-num">{{currentHeight}}</text>
+          <text class="now-unit">cm</text>
+        </view>
+        <view class="now-state {{stateClass}}">
+          <text class="state-dot"></text>
+          <text>{{stateText}}</text>
+        </view>
+      </view>
+      <view class="now-right">
+        <view class="station-tabs">
+          <view class="tab {{stationKey==='huizhou'?'active':''}}" bindtap="switchStation" data-key="huizhou">惠州</view>
+          <view class="tab {{stationKey==='dongguan'?'active':''}}" bindtap="switchStation" data-key="dongguan">东莞</view>
+        </view>
+        <text class="station-desc">{{stationDesc}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 日期条：前3天 + 今天 + 后7天 -->
+  <scroll-view class="date-bar" scroll-x="true" scroll-into-view="d{{activeIndex}}" scroll-with-animation="true" enhanced="true" show-scrollbar="false">
+    <view class="date-list">
+      <view wx:for="{{days}}" wx:key="date" id="d{{index}}"
+            class="date-item {{index===activeIndex?'on':''}} {{item.isToday?'is-today':''}}"
+            bindtap="selectDay" data-index="{{index}}">
+        <text class="weekday">{{item.weekday}}</text>
+        <text class="date-num">{{item.dateLabel}}</text>
+        <text class="date-tide tide-{{item.tideType}}"></text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 潮汐图 -->
+  <view class="chart-card">
+    <view class="chart-head">
+      <view class="chart-title-row">
+        <text class="chart-title">{{activeDay.dateCN}}</text>
+        <text class="tide-badge tide-{{activeDay.tideType}}">{{activeDay.tideTypeText}}</text>
+      </view>
+      <text class="chart-range">最高 {{activeDay.max.height}}cm · 最低 {{activeDay.min.height}}cm · 潮差 {{activeDay.range}}cm</text>
+    </view>
+    <tide-chart day="{{activeDay}}" station-key="{{stationKey}}"></tide-chart>
+    <view class="chart-legend">
+      <view class="lg lg-high"><text class="dot"></text>高潮</view>
+      <view class="lg lg-low"><text class="dot"></text>低潮</view>
+      <view class="lg lg-now"><text class="bar"></text>当前时刻</view>
+    </view>
+  </view>
+
+  <!-- 高低潮时刻表 -->
+  <view class="extrema-card">
+    <view class="extrema-title">当日潮位时刻表</view>
+    <view class="extrema-list">
+      <view wx:for="{{activeDay.timeline}}" wx:key="key" class="extrema-item {{item.type}}">
+        <text class="ex-time">{{item.time}}</text>
+        <text class="ex-type">{{item.typeText}}</text>
+        <text class="ex-height">{{item.height}} cm</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 说明 -->
+  <view class="note">
+    数据基于天文潮汐调和常数（M2/S2/K1/O1 等主要分潮）本地预测，覆盖前后任意日期，并参考国家海洋信息中心惠州港潮汐数据校准。未计入气象增减水与上游径流影响，结果仅供参考，实际潮位以水文/海洋部门发布为准。
+  </view>
+</view>

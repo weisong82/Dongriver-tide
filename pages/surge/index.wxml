@@ -1,0 +1,64 @@
+<view class="container">
+  <view class="page-title">气象增减水</view>
+  <view class="page-sub">径流水位 + 风暴增水，修正天文潮汐之外的部分</view>
+
+  <!-- 博罗(二)站水位卡 -->
+  <view class="card">
+    <view class="card-head">
+      <text class="card-title">博罗(二)水文站 · 当前水位</text>
+      <text class="tag tag-{{boluo.status}}">{{boluo.status==='live'?'实时':'示例'}}</text>
+    </view>
+    <view class="boluo-row">
+      <view class="boluo-main">
+        <text class="boluo-num">{{boluo.level}}</text>
+        <text class="boluo-unit">{{boluo.unit}}</text>
+      </view>
+      <view class="boluo-meta">
+        <view class="meta-line">更新时间：{{boluo.time || '—'}}</view>
+        <view class="meta-line">警戒水位：{{boluo.warn}}</view>
+      </view>
+    </view>
+    <view class="source">来源：{{boluo.source}}</view>
+  </view>
+
+  <!-- 博罗说明 -->
+  <view class="note note-warn">
+    注意：博罗站是径流/淡水水位，不是潮位。东江感潮段（惠州下游到东莞虎门）的潮位站较少公开，博罗站水位反映上游来水（径流）对下游潮位的影响——暴雨/泄洪时博罗水位上涨，会顶托下游潮位、抬高高潮。
+  </view>
+
+  <!-- 台风增水卡 -->
+  <view class="card">
+    <view class="card-head">
+      <text class="card-title">实时台风与风暴增水</text>
+      <text class="tag tag-{{typhoon.status}}">{{typhoon.status==='live'?'实时':'示例'}}</text>
+    </view>
+    <block wx:if="{{typhoon.name}}">
+      <view class="ty-name">
+        <text class="ty-label">台风</text>
+        <text class="ty-value">{{typhoon.name}}</text>
+        <text class="ty-num" wx:if="{{typhoon.number}}">{{typhoon.number}}</text>
+        <text class="ty-level" wx:if="{{typhoon.level}}">{{typhoon.level}}</text>
+      </view>
+      <view class="surge-box" wx:if="{{typhoon.surge}}">
+        <text class="surge-label">风暴增水</text>
+        <text class="surge-text">{{typhoon.surge}}</text>
+      </view>
+    </block>
+    <view class="ty-empty" wx:else>
+      <text>当前无活跃台风或暂未获取到增水预报</text>
+    </view>
+    <view class="source">来源：{{typhoon.source}}</view>
+  </view>
+
+  <!-- 台风说明 -->
+  <view class="note">
+    台风期间，实际潮位 = 天文潮 + 风暴增水。增水可达 80–160 cm，远超天文潮差，此时潮汐表（天文预测）会明显偏低，须以海洋预报台发布为准。
+  </view>
+
+  <!-- 数据源说明 -->
+  <view class="note note-src">
+    数据由云函数 getSurgeData 抓取：博罗水位来自 shuiwei.cc（服务端渲染 HTML，正则提取）；台风增水来自国家海洋环境预报中心 nmefc.cn。云函数未部署或抓取失败时降级为最近一次真实抓取示例（标注“示例”）。部署步骤见 README。
+  </view>
+
+  <view class="refresh" bindtap="refresh">刷新数据</view>
+</view>

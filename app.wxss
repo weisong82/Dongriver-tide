@@ -1,0 +1,22 @@
+/* app.wxss 全局样式 */
+page {
+  background: linear-gradient(180deg, #0b1f3a 0%, #0d2b4d 100%);
+  color: #e8f1fb;
+  font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
+  font-size: 28rpx;
+  min-height: 100vh;
+}
+
+view, text, scroll-view {
+  box-sizing: border-box;
+}
+
+/* 通用容器 */
+.container {
+  padding: 24rpx;
+}
+
+/* 文本辅助 */
+.muted {
+  color: #8fb0d0;
+}
