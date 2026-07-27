@@ -30,11 +30,15 @@ function normalizeBoluo(b) {
 }
 
 function normalizeTyphoon(t) {
-  if (!t || t.status !== 'live') {
-    return Object.assign({}, SAMPLE_TYPHOON, { status: 'sample' });
+  if (t && t.status === 'live') {
+    return Object.assign({}, t, { status: 'live' });
   }
-  // 云函数 live 时只返回 name/surge/status/source，其余字段不补假值
-  return Object.assign({}, SAMPLE_TYPHOON, t, { status: 'live' });
+  // 获取不到实时台风数据时，返回台风实时路径链接（不再用示例数据）
+  return {
+    status: 'fail',
+    link: 'https://tf.tianqi.com/',
+    source: '实时数据获取失败，可查看台风实时路径'
+  };
 }
 
 function fetchSurgeData() {

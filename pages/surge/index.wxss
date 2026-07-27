@@ -171,6 +171,35 @@
   color: #5f83a3;
 }
 
+.ty-empty {
+  text-align: center;
+  padding: 20rpx 0 10rpx;
+}
+.ty-empty-text {
+  display: block;
+  font-size: 24rpx;
+  color: #8fb0d0;
+  margin-bottom: 18rpx;
+}
+.ty-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20rpx;
+  border-radius: 14rpx;
+  background: rgba(79, 195, 247, 0.12);
+  border: 1rpx solid rgba(79, 195, 247, 0.4);
+}
+.ty-link text {
+  font-size: 26rpx;
+  color: #4fc3f7;
+}
+.ty-link-url {
+  margin-left: 12rpx;
+  font-size: 22rpx;
+  color: #8fb0d0;
+}
+
 .refresh {
   margin: 24rpx auto 0;
   width: 280rpx;

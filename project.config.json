@@ -59,12 +59,13 @@
   "cloudfunctionRoot": "cloudfunctions/",
   "compileType": "miniprogram",
   "libVersion": "3.17.0",
-  "appid": "wx04a581c5a51f5dcc",
+  "appid": "wx3868afbe04af2aff",
   "projectname": "dongriver-tide",
   "condition": {},
   "editorSetting": {
     "tabIndent": "insertSpaces",
     "tabSize": 2
   },
-  "simulatorPluginLibVersion": {}
+  "simulatorPluginLibVersion": {},
+  "cloudfunctionTemplateRoot": "cloudfunctionTemplate/"
 }

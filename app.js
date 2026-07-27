@@ -6,7 +6,7 @@ App({
     // 微信开发者工具 → 云开发 → 创建/选择环境 → 复制环境 ID
     if (wx.cloud) {
       try {
-        wx.cloud.init({ env: 'dongriver-tide', traceUser: true });
+        wx.cloud.init({ env: 'cloud1-d3gjs0x5cfdb9b846', traceUser: true });
       } catch (e) {
         console.warn('云开发初始化失败，气象增减水将降级为示例数据', e);
       }

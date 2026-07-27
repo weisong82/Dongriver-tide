@@ -26,5 +26,14 @@ Page({
 
   refresh() {
     this.load();
+  },
+
+  openTyphoonLink() {
+    wx.setClipboardData({
+      data: 'https://tf.tianqi.com/',
+      success: () => {
+        wx.showToast({ title: '链接已复制，请在浏览器打开', icon: 'none' });
+      }
+    });
   }
 });

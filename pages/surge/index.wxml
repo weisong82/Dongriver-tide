@@ -30,9 +30,9 @@
   <view class="card">
     <view class="card-head">
       <text class="card-title">实时台风与风暴增水</text>
-      <text class="tag tag-{{typhoon.status}}">{{typhoon.status==='live'?'实时':'示例'}}</text>
+      <text class="tag tag-{{typhoon.status}}">{{typhoon.status==='live'?'实时':'未获取'}}</text>
     </view>
-    <block wx:if="{{typhoon.name}}">
+    <block wx:if="{{typhoon.status === 'live'}}">
       <view class="ty-name">
         <text class="ty-label">台风</text>
         <text class="ty-value">{{typhoon.name}}</text>
@@ -43,11 +43,15 @@
         <text class="surge-label">风暴增水</text>
         <text class="surge-text">{{typhoon.surge}}</text>
       </view>
+      <view class="source">来源：{{typhoon.source}}</view>
     </block>
     <view class="ty-empty" wx:else>
-      <text>当前无活跃台风或暂未获取到增水预报</text>
+      <text class="ty-empty-text">实时台风数据获取失败</text>
+      <view class="ty-link" bindtap="openTyphoonLink">
+        <text>查看台风实时路径</text>
+        <text class="ty-link-url">tf.tianqi.com</text>
+      </view>
     </view>
-    <view class="source">来源：{{typhoon.source}}</view>
   </view>
 
   <!-- 台风说明 -->
