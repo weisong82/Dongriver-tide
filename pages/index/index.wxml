@@ -41,7 +41,7 @@
       <text class="bc-time">{{boluo.time || '更新时间 —'}}</text>
     </view>
     <view class="bc-right">
-      <text class="bc-tag bc-tag-{{boluo.status}}">{{boluo.status==='live'?'实时':(boluo.status==='sample'?'示例':'加载中')}}</text>
+      <text class="bc-tag bc-tag-{{boluo.status}}">{{boluo.status==='live'?'今日':(boluo.status==='sample'?'示例':'加载中')}}</text>
       <text class="bc-warn">警戒 {{boluo.warn || '—'}}</text>
     </view>
   </view>

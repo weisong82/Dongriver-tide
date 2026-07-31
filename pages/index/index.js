@@ -89,9 +89,9 @@ Page({
     if (this._timer) clearInterval(this._timer);
   },
 
-  // 博罗(二)站水位（经云函数 getSurgeData 获取，失败降级示例）
+  // 博罗(二)站水位（带 6 小时缓存，数据源每日更新一次）
   loadBoluo() {
-    surge.fetchSurgeData().then(({ boluo }) => {
+    surge.fetchBoluoCached().then((boluo) => {
       this.setData({ boluo });
     });
   },

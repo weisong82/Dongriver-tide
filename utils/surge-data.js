@@ -60,4 +60,38 @@ function fetchSurgeData() {
   });
 }
 
-module.exports = { fetchSurgeData, SAMPLE_BOLUO, SAMPLE_TYPHOON };
+// 博罗水位缓存：数据源每日更新一次，6 小时内复用，减少云函数调用
+const BOLUO_CACHE_KEY = 'boluo_cache';
+const BOLUO_CACHE_TTL = 6 * 3600 * 1000;
+
+function fetchBoluoCached() {
+  return new Promise((resolve) => {
+    // 命中缓存则直接返回
+    try {
+      const cache = wx.getStorageSync(BOLUO_CACHE_KEY);
+      if (cache && cache.ts && Date.now() - cache.ts < BOLUO_CACHE_TTL && cache.boluo) {
+        resolve(cache.boluo);
+        return;
+      }
+    } catch (e) {}
+    // 缓存失效，请求云函数
+    if (!wx.cloud || !wx.cloud.callFunction) {
+      resolve(normalizeBoluo(null));
+      return;
+    }
+    wx.cloud.callFunction({
+      name: 'getSurgeData',
+      success(res) {
+        const r = (res && res.result) || {};
+        const boluo = normalizeBoluo(r.boluo);
+        try { wx.setStorageSync(BOLUO_CACHE_KEY, { boluo, ts: Date.now() }); } catch (e) {}
+        resolve(boluo);
+      },
+      fail() {
+        resolve(normalizeBoluo(null));
+      }
+    });
+  });
+}
+
+module.exports = { fetchSurgeData, fetchBoluoCached, SAMPLE_BOLUO, SAMPLE_TYPHOON };

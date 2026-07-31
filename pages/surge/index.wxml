@@ -6,7 +6,7 @@
   <view class="card">
     <view class="card-head">
       <text class="card-title">博罗(二)水文站 · 当前水位</text>
-      <text class="tag tag-{{boluo.status}}">{{boluo.status==='live'?'实时':'示例'}}</text>
+      <text class="tag tag-{{boluo.status}}">{{boluo.status==='live'?'今日':'示例'}}</text>
     </view>
     <view class="boluo-row">
       <view class="boluo-main">
