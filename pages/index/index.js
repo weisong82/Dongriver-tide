@@ -71,6 +71,30 @@ Page({
 
   onLoad() {
     this.refreshAll();
+    this.checkUpdate();
+  },
+
+  // 检测小程序新版本：冷启动时自动检查，下载完成后提示用户重启加载
+  checkUpdate() {
+    if (!wx.getUpdateManager) return;
+    const um = wx.getUpdateManager();
+    um.onUpdateReady(() => {
+      wx.showModal({
+        title: '更新提示',
+        content: '发现新版本，是否立即重启加载？',
+        confirmText: '重启',
+        success(r) {
+          if (r.confirm) um.applyUpdate();
+        }
+      });
+    });
+    um.onUpdateFailed(() => {
+      wx.showModal({
+        title: '更新提示',
+        content: '新版本下载失败，请删除当前小程序后重新打开',
+        showCancel: false
+      });
+    });
   },
 
   onShow() {
