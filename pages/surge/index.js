@@ -35,5 +35,20 @@ Page({
         wx.showToast({ title: '链接已复制，请在浏览器打开', icon: 'none' });
       }
     });
+  },
+
+  onShareAppMessage() {
+    return {
+      title: '东江气象增减水 · 博罗水位与台风增水',
+      path: '/pages/surge/index',
+      imageUrl: '/assets/icon.png'
+    };
+  },
+
+  onShareTimeline() {
+    return {
+      title: '东江气象增减水',
+      imageUrl: '/assets/icon.png'
+    };
   }
 });

@@ -71,5 +71,20 @@ Page({
         ]
       }
     ]
+  },
+
+  onShareAppMessage() {
+    return {
+      title: '东江钓鱼 · 潮汐与鱼口',
+      path: '/pages/fishing/index',
+      imageUrl: '/assets/icon.png'
+    };
+  },
+
+  onShareTimeline() {
+    return {
+      title: '东江钓鱼 · 潮汐与鱼口',
+      imageUrl: '/assets/icon.png'
+    };
   }
 });

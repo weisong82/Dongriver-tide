@@ -144,5 +144,22 @@ Page({
         wx.showToast({ title: '备案号已复制，可于 beian.miit.gov.cn 查询', icon: 'none', duration: 2500 });
       }
     });
+  },
+
+  // 转发给朋友/群
+  onShareAppMessage() {
+    return {
+      title: '东江潮汐表 · 惠州东莞 前3天后7天潮汐',
+      path: '/pages/index/index',
+      imageUrl: '/assets/icon.png'
+    };
+  },
+
+  // 分享到朋友圈
+  onShareTimeline() {
+    return {
+      title: '东江潮汐表 · 惠州东莞潮汐预报',
+      imageUrl: '/assets/icon.png'
+    };
   }
 });
