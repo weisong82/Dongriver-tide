@@ -95,7 +95,7 @@
   </view>
 
   <!-- 备案信息 -->
-  <view class="icp">
+  <view class="icp" bindtap="copyICP" hover-class="icp-hover">
     <text>备案号：粤ICP备2026106696号</text>
   </view>
 </view>

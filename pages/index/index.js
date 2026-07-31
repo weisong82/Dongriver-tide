@@ -134,5 +134,15 @@ Page({
     const days = this.data.days;
     this.setData({ activeIndex: index, activeDay: days[index] });
     this.refreshNow();
+  },
+
+  // 复制备案号，引导用户到工信部备案查询页校验
+  copyICP() {
+    wx.setClipboardData({
+      data: '粤ICP备2026106696号',
+      success: () => {
+        wx.showToast({ title: '备案号已复制，可于 beian.miit.gov.cn 查询', icon: 'none', duration: 2500 });
+      }
+    });
   }
 });
