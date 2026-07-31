@@ -6,7 +6,7 @@
         <text class="title">东江潮汐表</text>
         <text class="subtitle">惠州 · 东莞 东江感潮段</text>
       </view>
-      <button class="share-btn" open-type="share" plain="true" hover-class="share-hover">分享</button>
+      <button class="share-btn" open-type="share" hover-class="share-hover">分享</button>
     </view>
 
     <view class="now-card">
