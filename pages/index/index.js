@@ -1,5 +1,6 @@
 // pages/index/index.js
 const tide = require('../../utils/tide.js');
+const surge = require('../../utils/surge-data.js');
 
 const WEEKDAYS = ['日', '一', '二', '三', '四', '五', '六'];
 
@@ -64,7 +65,8 @@ Page({
     activeDay: null,
     currentHeight: 0,
     stateText: '',
-    stateClass: ''
+    stateClass: '',
+    boluo: { level: '--', unit: 'm', time: '', warn: '', status: 'loading', source: '' }
   },
 
   onLoad() {
@@ -73,6 +75,7 @@ Page({
 
   onShow() {
     this.refreshNow();
+    this.loadBoluo();
     // 每分钟刷新一次“当前潮位”
     if (this._timer) clearInterval(this._timer);
     this._timer = setInterval(() => this.refreshNow(), 60000);
@@ -84,6 +87,13 @@ Page({
 
   onUnload() {
     if (this._timer) clearInterval(this._timer);
+  },
+
+  // 博罗(二)站水位（经云函数 getSurgeData 获取，失败降级示例）
+  loadBoluo() {
+    surge.fetchSurgeData().then(({ boluo }) => {
+      this.setData({ boluo });
+    });
   },
 
   refreshAll() {

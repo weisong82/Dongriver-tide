@@ -30,6 +30,23 @@
     </view>
   </view>
 
+  <!-- 博罗(二)站水位 -->
+  <view class="boluo-card">
+    <view class="bc-left">
+      <text class="bc-label">博罗(二)站水位</text>
+      <view class="bc-value">
+        <text class="bc-num">{{boluo.level}}</text>
+        <text class="bc-unit">{{boluo.unit}}</text>
+      </view>
+      <text class="bc-time">{{boluo.time || '更新时间 —'}}</text>
+    </view>
+    <view class="bc-right">
+      <text class="bc-tag bc-tag-{{boluo.status}}">{{boluo.status==='live'?'实时':(boluo.status==='sample'?'示例':'加载中')}}</text>
+      <text class="bc-warn">警戒 {{boluo.warn || '—'}}</text>
+    </view>
+  </view>
+  <view class="bc-tip">博罗为径流水位，暴雨/泄洪上涨会顶托抬高下游高潮</view>
+
   <!-- 日期条：前3天 + 今天 + 后7天 -->
   <scroll-view class="date-bar" scroll-x="true" scroll-into-view="d{{activeIndex}}" scroll-with-animation="true" enhanced="true" show-scrollbar="false">
     <view class="date-list">
