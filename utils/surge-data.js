@@ -60,16 +60,28 @@ function fetchSurgeData() {
   });
 }
 
-// 博罗水位缓存：数据源每日更新一次，6 小时内复用，减少云函数调用
+// 博罗水位缓存：数据源每日 08:00 更新一次，按"数据日期"判断缓存新鲜度
+// 缓存有效 = 缓存数据的更新时间 >= 最近一次数据更新时刻（今天8点，或当前未到8点则昨天8点）
 const BOLUO_CACHE_KEY = 'boluo_cache';
-const BOLUO_CACHE_TTL = 6 * 3600 * 1000;
+
+function isBoluoCacheFresh(cache) {
+  if (!cache || !cache.boluo || !cache.boluo.time) return false;
+  // 兼容 iOS 解析 "2026-07-31 08:00"
+  const t = new Date(String(cache.boluo.time).replace(/-/g, '/'));
+  if (isNaN(t.getTime())) return false;
+  const now = new Date();
+  const today8 = new Date(now);
+  today8.setHours(8, 0, 0, 0);
+  const lastUpdate = now.getTime() >= today8.getTime() ? today8 : new Date(today8.getTime() - 86400000);
+  return t.getTime() >= lastUpdate.getTime();
+}
 
 function fetchBoluoCached() {
   return new Promise((resolve) => {
-    // 命中缓存则直接返回
+    // 命中新鲜缓存则直接返回（跨日 08:00 后自动失效，触发重新请求）
     try {
       const cache = wx.getStorageSync(BOLUO_CACHE_KEY);
-      if (cache && cache.ts && Date.now() - cache.ts < BOLUO_CACHE_TTL && cache.boluo) {
+      if (isBoluoCacheFresh(cache)) {
         resolve(cache.boluo);
         return;
       }
