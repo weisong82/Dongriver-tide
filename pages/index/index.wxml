@@ -96,6 +96,6 @@
 
   <!-- 备案信息 -->
   <view class="icp">
-    <text>粤ICP备2026106696号</text>
+    <text>备案号：粤ICP备2026106696号</text>
   </view>
 </view>
