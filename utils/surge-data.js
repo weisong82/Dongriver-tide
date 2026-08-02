@@ -60,33 +60,9 @@ function fetchSurgeData() {
   });
 }
 
-// 博罗水位缓存：数据源每日 08:00 更新一次，按"数据日期"判断缓存新鲜度
-// 缓存有效 = 缓存数据的更新时间 >= 最近一次数据更新时刻（今天8点，或当前未到8点则昨天8点）
-const BOLUO_CACHE_KEY = 'boluo_cache';
-
-function isBoluoCacheFresh(cache) {
-  if (!cache || !cache.boluo || !cache.boluo.time) return false;
-  // 兼容 iOS 解析 "2026-07-31 08:00"
-  const t = new Date(String(cache.boluo.time).replace(/-/g, '/'));
-  if (isNaN(t.getTime())) return false;
-  const now = new Date();
-  const today8 = new Date(now);
-  today8.setHours(8, 0, 0, 0);
-  const lastUpdate = now.getTime() >= today8.getTime() ? today8 : new Date(today8.getTime() - 86400000);
-  return t.getTime() >= lastUpdate.getTime();
-}
-
-function fetchBoluoCached() {
+// 博罗水位：每次打开实时请求云函数，结果存页面内存，关闭小程序自然清除
+function fetchBoluo() {
   return new Promise((resolve) => {
-    // 命中新鲜缓存则直接返回（跨日 08:00 后自动失效，触发重新请求）
-    try {
-      const cache = wx.getStorageSync(BOLUO_CACHE_KEY);
-      if (isBoluoCacheFresh(cache)) {
-        resolve(cache.boluo);
-        return;
-      }
-    } catch (e) {}
-    // 缓存失效，请求云函数
     if (!wx.cloud || !wx.cloud.callFunction) {
       resolve(normalizeBoluo(null));
       return;
@@ -95,9 +71,7 @@ function fetchBoluoCached() {
       name: 'getSurgeData',
       success(res) {
         const r = (res && res.result) || {};
-        const boluo = normalizeBoluo(r.boluo);
-        try { wx.setStorageSync(BOLUO_CACHE_KEY, { boluo, ts: Date.now() }); } catch (e) {}
-        resolve(boluo);
+        resolve(normalizeBoluo(r.boluo));
       },
       fail() {
         resolve(normalizeBoluo(null));
@@ -106,4 +80,4 @@ function fetchBoluoCached() {
   });
 }
 
-module.exports = { fetchSurgeData, fetchBoluoCached, SAMPLE_BOLUO, SAMPLE_TYPHOON };
+module.exports = { fetchSurgeData, fetchBoluo, SAMPLE_BOLUO, SAMPLE_TYPHOON };

@@ -100,22 +100,24 @@ Page({
   onShow() {
     this.refreshNow();
     this.loadBoluo();
-    // 每分钟刷新一次“当前潮位”
+    // 每分钟刷新一次"当前潮位"
     if (this._timer) clearInterval(this._timer);
     this._timer = setInterval(() => this.refreshNow(), 60000);
   },
 
   onHide() {
     if (this._timer) clearInterval(this._timer);
+    // 清除水位数据，下次 onShow 重新实时加载
+    this.setData({ boluo: { level: '--', unit: 'm', time: '', warn: '', status: 'loading', source: '' } });
   },
 
   onUnload() {
     if (this._timer) clearInterval(this._timer);
   },
 
-  // 博罗(二)站水位（带 6 小时缓存，数据源每日更新一次）
+  // 博罗(二)站水位：每次 onShow 实时请求云函数，结果存页面内存
   loadBoluo() {
-    surge.fetchBoluoCached().then((boluo) => {
+    surge.fetchBoluo().then((boluo) => {
       this.setData({ boluo });
     });
   },
