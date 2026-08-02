@@ -1,7 +1,5 @@
 {
-  "usingComponents": {
-    "water-chart": "../../components/water-chart/water-chart"
-  },
+  "usingComponents": {},
   "navigationBarTitleText": "气象增减水",
   "enablePullDownRefresh": true
 }

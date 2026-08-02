@@ -20,16 +20,6 @@
     <view class="source">来源：{{boluo.source}}</view>
   </view>
 
-  <!-- 博罗水位 24h 趋势图 -->
-  <view class="card">
-    <view class="card-head">
-      <text class="card-title">博罗水位 24h 趋势</text>
-      <text class="tag tag-sample">模型参考</text>
-    </view>
-    <water-chart trend="{{trend}}"></water-chart>
-    <view class="trend-note">基于潮汐调和常数模型计算的水位趋势参考，反映潮汐影响下的水位起伏；实际径流水位以博罗站实测为准。</view>
-  </view>
-
   <!-- 博罗说明 -->
   <view class="note note-warn">
     注意：博罗站是径流/淡水水位，不是潮位。东江感潮段（惠州下游到东莞虎门）的潮位站较少公开，博罗站水位反映上游来水（径流）对下游潮位的影响——暴雨/泄洪时博罗水位上涨，会顶托下游潮位、抬高高潮。

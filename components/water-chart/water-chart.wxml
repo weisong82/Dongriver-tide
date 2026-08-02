@@ -1,3 +1,0 @@
-<view class="wc-wrap">
-  <canvas type="2d" id="waterCanvas" class="canvas"></canvas>
-</view>
