@@ -1,0 +1,10 @@
+.wc-wrap {
+  width: 100%;
+  height: 320rpx;
+  position: relative;
+}
+.canvas {
+  width: 100%;
+  height: 320rpx;
+  display: block;
+}

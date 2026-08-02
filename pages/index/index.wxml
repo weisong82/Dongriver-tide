@@ -43,7 +43,6 @@
     </view>
     <view class="bc-right">
       <text class="bc-tag bc-tag-{{boluo.status}}">{{boluo.status==='live'?'今日':(boluo.status==='sample'?'示例':'加载中')}}</text>
-      <text class="bc-warn">警戒 {{boluo.warn || '—'}}</text>
     </view>
   </view>
   <view class="bc-tip">博罗为径流水位，暴雨/泄洪上涨会顶托抬高下游高潮</view>
