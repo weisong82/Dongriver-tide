@@ -71,7 +71,12 @@ function fetchBoluo() {
       name: 'getSurgeData',
       success(res) {
         const r = (res && res.result) || {};
-        resolve(normalizeBoluo(r.boluo));
+        const boluo = normalizeBoluo(r.boluo);
+        // live 数据存入历史记录
+        if (boluo.status === 'live' && boluo.level && boluo.time) {
+          saveBoluoHistory(boluo);
+        }
+        resolve(boluo);
       },
       fail() {
         resolve(normalizeBoluo(null));
@@ -80,4 +85,32 @@ function fetchBoluo() {
   });
 }
 
-module.exports = { fetchSurgeData, fetchBoluo, SAMPLE_BOLUO, SAMPLE_TYPHOON };
+// === 博罗水位历史记录（localStorage 持久化，最近 7 天） ===
+const BOLUO_HISTORY_KEY = 'boluo_history';
+
+// 存一条记录：{ date: '08-02', level: 1.03, time: '2026-08-02 08:00' }
+function saveBoluoHistory(boluo) {
+  try {
+    const list = wx.getStorageSync(BOLUO_HISTORY_KEY) || [];
+    // 从 time 提取日期键，如 '2026-08-02 08:00' → '08-02'
+    const dateKey = boluo.time.substring(5, 10);
+    // 去重：同一天覆盖旧记录
+    const filtered = list.filter((item) => item.date !== dateKey);
+    filtered.push({ date: dateKey, level: parseFloat(boluo.level), time: boluo.time });
+    // 按日期排序，保留最近 7 天
+    filtered.sort((a, b) => a.time.localeCompare(b.time));
+    const recent = filtered.slice(-7);
+    wx.setStorageSync(BOLUO_HISTORY_KEY, recent);
+  } catch (e) {}
+}
+
+// 读取历史记录
+function getBoluoHistory() {
+  try {
+    return wx.getStorageSync(BOLUO_HISTORY_KEY) || [];
+  } catch (e) {
+    return [];
+  }
+}
+
+module.exports = { fetchSurgeData, fetchBoluo, getBoluoHistory, saveBoluoHistory, SAMPLE_BOLUO, SAMPLE_TYPHOON };

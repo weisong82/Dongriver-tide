@@ -1,5 +1,7 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "boluo-trend": "../../components/boluo-trend/boluo-trend"
+  },
   "navigationBarTitleText": "气象增减水",
   "enablePullDownRefresh": true
 }

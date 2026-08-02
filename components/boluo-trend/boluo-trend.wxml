@@ -1,0 +1,3 @@
+<view class="bt-wrap">
+  <canvas type="2d" id="boluoTrendCanvas" class="canvas"></canvas>
+</view>
