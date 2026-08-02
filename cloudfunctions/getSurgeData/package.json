@@ -1,9 +1,10 @@
 {
   "name": "getSurgeData",
   "version": "1.0.0",
-  "description": "抓取博罗(二)站水位与台风风暴增水",
+  "description": "抓取博罗(二)站水位与台风风暴增水，水位历史存云数据库",
   "main": "index.js",
   "dependencies": {
-    "axios": "^1.7.0"
+    "axios": "^1.7.0",
+    "wx-server-sdk": "~2.6.3"
   }
 }

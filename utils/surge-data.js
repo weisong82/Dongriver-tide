@@ -104,13 +104,32 @@ function saveBoluoHistory(boluo) {
   } catch (e) {}
 }
 
-// 读取历史记录
+// 读取历史记录：优先云端，降级本地
 function getBoluoHistory() {
-  try {
-    return wx.getStorageSync(BOLUO_HISTORY_KEY) || [];
-  } catch (e) {
-    return [];
-  }
+  return new Promise((resolve) => {
+    // 本地缓存（秒出，作为降级/离线兜底）
+    let localHistory = [];
+    try { localHistory = wx.getStorageSync(BOLUO_HISTORY_KEY) || []; } catch (e) {}
+    if (!wx.cloud || !wx.cloud.callFunction) {
+      resolve(localHistory);
+      return;
+    }
+    wx.cloud.callFunction({
+      name: 'getSurgeData',
+      data: { action: 'getHistory' },
+      success(res) {
+        const r = (res && res.result) || {};
+        if (r.status === 'live' && Array.isArray(r.history) && r.history.length) {
+          resolve(r.history);
+        } else {
+          resolve(localHistory);
+        }
+      },
+      fail() {
+        resolve(localHistory);
+      }
+    });
+  });
 }
 
 module.exports = { fetchSurgeData, fetchBoluo, getBoluoHistory, saveBoluoHistory, SAMPLE_BOLUO, SAMPLE_TYPHOON };

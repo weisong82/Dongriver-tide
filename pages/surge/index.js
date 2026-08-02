@@ -10,14 +10,19 @@ Page({
   },
 
   onLoad() {
-    // 先读历史记录（本地秒出），再请求实时数据
-    this.setData({ history: surge.getBoluoHistory() });
+    this.loadHistory();
     this.load();
   },
 
   onShow() {
     // 首页 fetchBoluo 可能已存新记录，切回本页时刷新历史
-    this.setData({ history: surge.getBoluoHistory() });
+    this.loadHistory();
+  },
+
+  loadHistory() {
+    surge.getBoluoHistory().then((history) => {
+      this.setData({ history });
+    });
   },
 
   onPullDownRefresh() {
