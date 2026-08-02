@@ -7,7 +7,7 @@ Component({
     stationKey: { type: String, value: 'huizhou' },
     // 当日预测数据 predictDay 的结果
     day: { type: Object, value: null, observer() { this.draw(); } },
-    // 是否绘制“当前时刻”标记线
+    // 是否绘制"当前时刻"标记线
     showNow: { type: Boolean, value: true }
   },
 
@@ -17,6 +17,13 @@ Component({
   },
 
   lifetimes: {
+    attached() {
+      this.ctx = null;
+      this.canvas = null;
+      this.cssW = 0;
+      this.cssH = 0;
+      this.canvasReady = false;
+    },
     ready() {
       this.initCanvas();
     }
@@ -37,23 +44,27 @@ Component({
         ctx.scale(dpr, dpr);
         this.canvas = canvas;
         this.ctx = ctx;
-        this.setData({ cssW: w, cssH: h });
+        // 用实例变量而非 setData，避免异步延迟导致 draw 读到旧值
+        this.cssW = w;
+        this.cssH = h;
+        this.canvasReady = true;
         this.draw();
       });
     },
 
     draw() {
-      if (!this.ctx || !this.data.day) return;
+      // Canvas 未就绪或数据未到，都不画；两边就绪后由 observer/init 回调触发
+      if (!this.canvasReady || !this.ctx || !this.data.day) return;
       const ctx = this.ctx;
-      const w = this.data.cssW;
-      const h = this.data.cssH;
+      const w = this.cssW;
+      const h = this.cssH;
       const day = this.data.day;
       if (!w || !h) return;
 
       ctx.clearRect(0, 0, w, h);
 
       // 绘图区边距
-      const padL = 46, padR = 14, padT = 20, padB = 26;
+      const padL = 50, padR = 16, padT = 20, padB = 30;
       const plotW = w - padL - padR;
       const plotH = h - padT - padB;
 
@@ -74,39 +85,78 @@ Component({
       ctx.fillStyle = bg;
       ctx.fillRect(padL, padT, plotW, plotH);
 
-      // 横向网格 + y 轴标签（潮高，每 50cm）
+      // === Y 轴：横向网格 + 刻度 + 数值标签（潮高，每 50cm） ===
       const step = 50;
       const gridStart = Math.ceil(hMin / step) * step;
       ctx.font = '9px sans-serif';
-      ctx.fillStyle = '#8fb0d0';
       ctx.textAlign = 'right';
       ctx.textBaseline = 'middle';
       for (let v = gridStart; v <= hMax; v += step) {
         const y = yOf(v);
+        // 网格线
         ctx.strokeStyle = 'rgba(31, 74, 110, 0.45)';
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(padL, y);
         ctx.lineTo(padL + plotW, y);
         ctx.stroke();
-        ctx.fillText(String(Math.round(v)), padL - 6, y);
+        // 刻度短线（向轴左伸出）
+        ctx.strokeStyle = 'rgba(143, 176, 208, 0.7)';
+        ctx.beginPath();
+        ctx.moveTo(padL - 4, y);
+        ctx.lineTo(padL, y);
+        ctx.stroke();
+        // 数值标签
+        ctx.fillStyle = '#9fc4e0';
+        ctx.fillText(String(Math.round(v)), padL - 7, y);
       }
 
-      // 竖向网格 + x 轴标签（0/6/12/18/24 时）
+      // === X 轴：竖向网格 + 刻度 + 小时标签（每 3 小时） ===
       ctx.textAlign = 'center';
       ctx.textBaseline = 'top';
-      [0, 6, 12, 18, 24].forEach((hr) => {
+      const xHours = [0, 3, 6, 9, 12, 15, 18, 21, 24];
+      xHours.forEach((hr) => {
         const m = hr * 60;
         const x = xOf(m);
-        ctx.strokeStyle = 'rgba(31, 74, 110, 0.45)';
+        // 网格线（每 6 小时加深，每 3 小时浅）
+        ctx.strokeStyle = (hr % 6 === 0) ? 'rgba(31, 74, 110, 0.55)' : 'rgba(31, 74, 110, 0.25)';
         ctx.beginPath();
         ctx.moveTo(x, padT);
         ctx.lineTo(x, padT + plotH);
         ctx.stroke();
-        ctx.fillText(String(hr).padStart(2, '0'), x, padT + plotH + 6);
+        // 刻度短线（向下伸出）
+        ctx.strokeStyle = 'rgba(143, 176, 208, 0.7)';
+        ctx.beginPath();
+        ctx.moveTo(x, padT + plotH);
+        ctx.lineTo(x, padT + plotH + 4);
+        ctx.stroke();
+        // 小时标签
+        ctx.fillStyle = (hr % 6 === 0) ? '#b9d4ec' : '#6f93b3';
+        ctx.fillText(String(hr).padStart(2, '0'), x, padT + plotH + 7);
       });
 
-      // 潮位曲线 + 填充
+      // === 坐标轴线（左轴 + 底轴，加粗） ===
+      ctx.strokeStyle = 'rgba(143, 176, 208, 0.5)';
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(padL, padT);
+      ctx.lineTo(padL, padT + plotH);
+      ctx.lineTo(padL + plotW, padT + plotH);
+      ctx.stroke();
+
+      // === 轴标题 ===
+      ctx.fillStyle = '#6f93b3';
+      ctx.font = '9px sans-serif';
+      // Y 轴标题（顶部）
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText('潮高(cm)', padL, padT - 4);
+      // X 轴标题（右下）
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'top';
+      ctx.fillText('时', padL + plotW, padT + plotH + 16);
+
+      // === 潮位曲线 + 填充 ===
       const series = day.series || [];
       if (series.length > 1) {
         const baseline = padT + plotH;
@@ -133,7 +183,7 @@ Component({
         ctx.stroke();
       }
 
-      // 高潮点
+      // === 高潮点 ===
       ctx.font = '9px sans-serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'bottom';
@@ -146,7 +196,7 @@ Component({
         ctx.fillStyle = '#ffd9d9';
         ctx.fillText(Math.round(p.height) + '', x, y - 4);
       });
-      // 低潮点
+      // === 低潮点 ===
       ctx.textBaseline = 'top';
       (day.lows || []).forEach((p) => {
         const x = xOf(p.minutes), y = yOf(p.height);
@@ -158,7 +208,7 @@ Component({
         ctx.fillText(Math.round(p.height) + '', x, y + 4);
       });
 
-      // 当前时刻竖线
+      // === 当前时刻竖线 ===
       if (this.data.showNow && this.data.stationKey) {
         const station = tide.STATIONS[this.data.stationKey];
         if (station) {
