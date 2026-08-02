@@ -27,7 +27,6 @@
       <text class="tag tag-sample">{{history.length}}天</text>
     </view>
     <boluo-trend history="{{history}}"></boluo-trend>
-    <view class="trend-note">每次打开小程序自动记录当日水位，累积形成趋势（本地存储，最多保留7天）。</view>
   </view>
 
   <!-- 博罗说明 -->
